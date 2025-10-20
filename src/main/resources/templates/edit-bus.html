@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Bus</title>
+    <link rel="stylesheet" th:href="@{/css/edit-bus.css}">
+</head>
+<body>
+<h1>Edit Bus</h1>
+<form th:action="@{/buses/edit/{id}(id=${bus.id})}" th:object="${bus}" method="post">
+    <label>Name:</label> <input type="text" th:field="*{busName}" /><br/>
+    <label>Source:</label> <input type="text" th:field="*{source}" /><br/>
+    <label>Destination:</label> <input type="text" th:field="*{destination}" /><br/>
+    <label>Departure:</label> <input type="datetime-local" th:field="*{departureTime}" /><br/>
+    <label>Arrival:</label> <input type="datetime-local" th:field="*{arrivalTime}" /><br/>
+    <label>Total Seats:</label> <input type="number" th:field="*{totalSeats}" /><br/>
+    <label>Fare:</label> <input type="number" step="0.01" th:field="*{fare}" /><br/>
+    <button type="submit">Update</button>
+</form>
+<a th:href="@{/buses}">Back to Bus List</a>
+</body>
+</html>

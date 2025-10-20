@@ -1,0 +1,50 @@
+/* user-list.css */
+
+/* Table styling */
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* Table headers */
+th {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Table cells */
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Hover effect for rows */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Links styling */
+a {
+    text-decoration: none;
+    color: #2196F3;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* Add hover effect for links */
+a:hover {
+    color: #0b7dda;
+}
+
+/* Heading styling */
+h1 {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-top: 20px;
+}

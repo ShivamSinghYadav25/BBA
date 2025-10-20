@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bookings</title>
+    <link rel="stylesheet" th:href="@{/css/bookings.css}">
+</head>
+<body>
+<h1>All Bookings</h1>
+<a th:href="@{/bookings/add}">Add New Booking</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Bus</th>
+        <th>User</th>
+        <th>Seats</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="booking : ${bookings}">
+        <td th:text="${booking.id}"></td>
+        <td th:text="${booking.bus.busName}"></td>
+        <td th:text="${booking.user.name}"></td>
+        <td th:text="${booking.seatsBooked}"></td>
+        <td th:text="${booking.bookingDate}"></td>
+        <td th:text="${booking.status}"></td>
+        <td>
+            <a th:href="@{/bookings/edit/{

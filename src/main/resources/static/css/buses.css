@@ -1,0 +1,67 @@
+/* bus-list.css */
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+table {
+    border-collapse: collapse;
+    width: 95%;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.btn-add {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-add:hover {
+    background-color: #0b7dda;
+}
+
+.btn-edit {
+    background-color: #FFC107;
+    color: black;
+}
+
+.btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.btn-delete {
+    background-color: #F44336;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #d32f2f;
+}

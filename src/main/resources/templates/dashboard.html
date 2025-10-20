@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+<h1>Welcome, <span sec:authentication="name"></span>!</h1>
+
+<p>Your email: <span sec:authentication="principal.username"></span></p>
+
+<p>
+    <a th:href="@{/logout}">Logout</a>
+</p>
+
+<h2>Your Bookings:</h2>
+<ul>
+    <!-- Example: Loop through bookings if you pass them from controller -->
+    <li th:each="booking : ${bookings}">
+        Booking ID: <span th:text="${booking.id}"></span>,
+        Date: <span th:text="${booking.date}"></span>
+    </li>
+</ul>
+
+</body>
+</html>
