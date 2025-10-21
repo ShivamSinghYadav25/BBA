@@ -1,25 +1,29 @@
-/* booking-list.css */
-
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
+    background-color: #f2f2f2;
 }
 
 h1 {
     color: #333;
 }
 
+/* Table Styling */
 table {
     border-collapse: collapse;
-    width: 90%;
+    width: 100%;
     margin-top: 20px;
-    background-color: #f9f9f9;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow-x: auto;
 }
 
 th, td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
+    color: #333;
 }
 
 th {
@@ -29,16 +33,21 @@ th {
 
 tr:hover {
     background-color: #f1f1f1;
+    transition: 0.3s ease;
 }
 
+/* Links / Buttons */
 a {
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 4px;
     margin-right: 5px;
     font-weight: bold;
+    transition: 0.3s ease;
+    display: inline-block;
 }
 
+/* Add Button */
 .btn-add {
     background-color: #2196F3;
     color: white;
@@ -48,6 +57,7 @@ a {
     background-color: #0b7dda;
 }
 
+/* Edit Button */
 .btn-edit {
     background-color: #FFC107;
     color: black;
@@ -57,6 +67,7 @@ a {
     background-color: #e0a800;
 }
 
+/* Delete Button */
 .btn-delete {
     background-color: #F44336;
     color: white;

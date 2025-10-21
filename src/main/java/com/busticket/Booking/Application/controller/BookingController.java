@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/bookings")
-public class BookingViewController {
+public class BookingController {
 
     @Autowired
     private BookingRepository bookingRepository;
