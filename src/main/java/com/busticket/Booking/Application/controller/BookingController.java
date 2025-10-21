@@ -1,109 +1,60 @@
 package com.busticket.Booking.Application.controller;
 
 import com.busticket.Booking.Application.model.Booking;
-import com.busticket.Booking.Application.model.Bus;
 import com.busticket.Booking.Application.repository.BookingRepository;
-import com.busticket.Booking.Application.repository.BusRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
-@RestController
-@RequestMapping("/api/bookings")
-public class BookingController {
+@Controller
+@RequestMapping("/bookings")
+public class BookingViewController {
 
     @Autowired
     private BookingRepository bookingRepository;
 
-    @Autowired
-    private BusRepository busRepository;
-
-    // Get all bookings
+    // List all bookings (Thymeleaf page)
     @GetMapping
-    public List<Booking> getAllBookings() {
-        return bookingRepository.findAll();
+    public String listBookings(Model model) {
+        model.addAttribute("bookings", bookingRepository.findAll());
+        return "bookings";  // Thymeleaf template: bookings.html
     }
 
-    // Get a booking by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
-        Optional<Booking> booking = bookingRepository.findById(id);
-        return booking.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    // Show add booking page
+    @GetMapping("/add")
+    public String addBookingForm(Model model) {
+        model.addAttribute("booking", new Booking());
+        return "add-booking"; // create add-booking.html
     }
 
-    // Create a booking
-    @PostMapping
-    public ResponseEntity<?> createBooking(@Valid @RequestBody Booking booking, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Validation errors: " + bindingResult.getAllErrors());
-        }
-
-        try {
-            // Check if the bus exists
-            if (booking.getBus() != null && booking.getBus().getId() != null) {
-                Optional<Bus> busOptional = busRepository.findById(booking.getBus().getId());
-                if (busOptional.isEmpty()) {
-                    return ResponseEntity.badRequest().body("Bus with ID " + booking.getBus().getId() + " not found");
-                }
-                booking.setBus(busOptional.get());
-            }
-            Booking savedBooking = bookingRepository.save(booking);
-            return ResponseEntity.ok(savedBooking);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error creating booking: " + e.getMessage());
-        }
+    // Save booking (form submission)
+    @PostMapping("/add")
+    public String saveBooking(@ModelAttribute Booking booking) {
+        bookingRepository.save(booking);
+        return "redirect:/bookings";
     }
 
-    // Update a booking
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateBooking(@PathVariable Long id, @Valid @RequestBody Booking bookingDetails, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Validation errors: " + bindingResult.getAllErrors());
-        }
-
-        try {
-            Optional<Booking> optionalBooking = bookingRepository.findById(id);
-            if (optionalBooking.isPresent()) {
-                Booking booking = optionalBooking.get();
-
-                // Update booking details
-                booking.setSeatsBooked(bookingDetails.getSeatsBooked());
-                booking.setBookingDate(bookingDetails.getBookingDate() != null ? bookingDetails.getBookingDate() : bookingDetails.getBookingTime());
-                booking.setStatus(bookingDetails.getStatus());
-                booking.setUserEmail(bookingDetails.getUserEmail());
-
-                // Update bus if provided
-                if (bookingDetails.getBus() != null && bookingDetails.getBus().getId() != null) {
-                    Optional<Bus> busOptional = busRepository.findById(bookingDetails.getBus().getId());
-                    if (busOptional.isEmpty()) {
-                        return ResponseEntity.badRequest().body("Bus with ID " + bookingDetails.getBus().getId() + " not found");
-                    }
-                    booking.setBus(busOptional.get());
-                }
-
-                return ResponseEntity.ok(bookingRepository.save(booking));
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error updating booking: " + e.getMessage());
-        }
+    // Show edit booking page
+    @GetMapping("/edit/{id}")
+    public String editBookingForm(@PathVariable Long id, Model model) {
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid booking ID: " + id));
+        model.addAttribute("booking", booking);
+        return "edit-booking"; // create edit-booking.html
     }
 
-    // Delete a booking
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
-        if (bookingRepository.existsById(id)) {
-            bookingRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    // Update booking (form submission)
+    @PostMapping("/edit/{id}")
+    public String updateBooking(@PathVariable Long id, @ModelAttribute Booking booking) {
+        booking.setId(id);
+        bookingRepository.save(booking);
+        return "redirect:/bookings";
+    }
+
+    // Delete booking
+    @GetMapping("/delete/{id}")
+    public String deleteBooking(@PathVariable Long id) {
+        bookingRepository.deleteById(id);
+        return "redirect:/bookings";
     }
 }
