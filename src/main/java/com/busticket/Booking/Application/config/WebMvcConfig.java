@@ -9,7 +9,7 @@ import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
-    public void addFormatters(FormatterRegistry registry) {
+    public void addFormatters(@org.springframework.lang.NonNull FormatterRegistry registry) {
         DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
         registrar.setUseIsoFormat(true); // Use ISO format for LocalDateTime
         registrar.registerFormatters(registry);
